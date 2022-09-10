@@ -9,7 +9,8 @@ type Account struct {
 	AccountType string `json:"account_type"`
 	Credit      string `json:"credit"`
 	Debit       string `json:"debit"`
+	UserId      string `json:"user_id"`
 	User        User
 	Balance     float32 `json:"balance"`
-	Transactions []Transaction
+	Transactions []Transaction 
 }

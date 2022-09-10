@@ -8,11 +8,11 @@ import (
 )
 
 type RegisterInput struct {
-	FirstName   string
-	LastName    string
-	Email       string
-	PhoneNumber string
-	Password    string
+	FirstName   string `json:"first_name" binding:"required"`
+	LastName    string `json:"last_name" bindiing:"required"`
+	Email       string `json:"email" binding:"required"`
+	PhoneNumber string `json:"phone" binding:"required"`
+	Password    string `json:"password" binding:"required"`
 }
 
 func Register(c *gin.Context) {
@@ -28,5 +28,12 @@ func Register(c *gin.Context) {
 	u.Email = input.Email
 	u.PhoneNumber = input.PhoneNumber
 
-	c.JSON(http.StatusOK, gin.H{"message": "Register User"})
+	_, err := u.SaveUser()
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Registered User Successfully"})
 }

@@ -5,8 +5,10 @@ import (
 	"strings"
 	"time"
 
+	"github.com/ayimdomnic/go-web-server/helpers"
 	"github.com/ayimdomnic/go-web-server/types"
 	"golang.org/x/crypto/bcrypt"
+	"gorm.io/gorm"
 )
 
 type User struct {
@@ -24,7 +26,7 @@ type User struct {
 	Ticket      []Ticket
 }
 
-func (u *User) BeforeSave() error {
+func (u *User) BeforeSave(*gorm.DB) error {
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
 	if err != nil {
 		return err
@@ -44,4 +46,31 @@ func (u *User) SaveUser() (*User, error) {
 		return &User{}, err
 	}
 	return u, nil
+}
+
+func VerifyPassword(password string, hashedPassword string) error {
+	return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
+}
+
+func LoginCheck(username string, password string) (string, error) {
+	u := User{}
+	err := DB.Model(User{}).Where("username = ?", username).Take(&u).Error
+
+	if err != nil {
+		return "", err
+	}
+
+	err = VerifyPassword(password, u.Password)
+
+	if err != nil && err == bcrypt.ErrMismatchedHashAndPassword {
+		return "", err
+	}
+
+	token, err := helpers.GenerateToken(u.ID)
+
+	if err != nil {
+		return "", err
+	}
+
+	return token, nil
 }
