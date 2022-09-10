@@ -1,7 +1,6 @@
 package models
 
 import (
-	"github.com/ayimdomnic/go-web-server/helpers"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -11,7 +10,7 @@ var DB *gorm.DB
 
 func ConnectDatabase() {
 
-	dsn := helpers.GoDotEnvVariableKey("DSN")
+	dsn := "host=ec2-34-231-42-166.compute-1.amazonaws.com user=gfaxtykdofxihj password=8b00c2e63a669c1b5d11bffbf7d3ad39ed68a8b3f34fcfc5d3aea2a3ab7aa5af dbname=d4pbcfl1obr6uo port=5432 sslmode=true TimeZone=Africa/Nairobi"
 	db, err := gorm.Open(postgres.New(postgres.Config{
 		DSN:                  dsn,
 		PreferSimpleProtocol: true,
