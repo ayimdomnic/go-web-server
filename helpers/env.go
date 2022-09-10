@@ -7,7 +7,7 @@ import (
 )
 
 func GoDotEnvVariableKey(key string) string {
-	err := godotenv.Load(".env")
+	err := godotenv.Load(".env", "env-example") 
 
 	if err != nil {
 		log.Fatal("Error loading the env file")
