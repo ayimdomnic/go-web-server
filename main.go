@@ -17,8 +17,8 @@ func main() {
 			"message": "Welcome to MegaPesa Apis",
 		})
 	})
-
 	r.GET("/lottos", controllers.FindLottos)
+	r.POST("/register", controllers.Register)
 
 	r.Run(":3000")
 }

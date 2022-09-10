@@ -23,7 +23,7 @@ func ConnectDatabase() {
 		panic("Failed to connect to database")
 	}
 
-	db.AutoMigrate(&User{}, &Lotto{}, &Ticket{})
+	db.AutoMigrate(&User{}, &Lotto{}, &Ticket{}, &Account{}, &Transaction{})
 
 	DB = db
 }
