@@ -3,7 +3,6 @@ package helpers
 import (
 	"log"
 	"os"
-
 	"github.com/joho/godotenv"
 )
 

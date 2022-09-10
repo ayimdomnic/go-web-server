@@ -34,4 +34,5 @@ type Lotto struct {
 	UpdatedAt     time.Time         `json:"updated_at"`
 	DeletedAt     time.Time         `json:"deleted_at"`
 	CreatedBy     string            `json:"created_by"`
+	Tickets []Ticket
 }

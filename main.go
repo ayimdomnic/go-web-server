@@ -2,6 +2,8 @@ package main
 
 import (
 	"net/http"
+
+	"github.com/ayimdomnic/go-web-server/controllers"
 	"github.com/ayimdomnic/go-web-server/models"
 	"github.com/gin-gonic/gin"
 )
@@ -9,11 +11,14 @@ import (
 func main() {
 	r := gin.Default()
 	models.ConnectDatabase()
-	r.GET("/ping", func(ctx *gin.Context) {
+
+	r.GET("/", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{
-			"message": "Hello World",
+			"message": "Welcome to MegaPesa Apis",
 		})
 	})
+
+	r.GET("/lottos", controllers.FindLottos)
 
 	r.Run(":3000")
 }
